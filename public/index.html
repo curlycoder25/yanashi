@@ -67,6 +67,10 @@
     .animate-card-flip { animation: cardFlip .4s cubic-bezier(.22,1,.36,1) both; }
     @keyframes orbitDrift { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-5px) scale(1.04); } }
     .animate-orbit-badge { animation: orbitDrift 3.6s ease-in-out infinite; }
+    @keyframes mascotBob { 0%, 100% { transform: translateY(0px) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+    .animate-mascot-bob { animation: mascotBob 2.8s ease-in-out infinite; }
+    @keyframes mascotBlink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.12); } }
+    .mascot-eye { transform-origin: center; animation: mascotBlink 4.2s infinite; }
 
     .auth-field{display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;border-radius:16px;background:#fff;border:1.5px solid #EDE9FE;transition:border-color .2s,box-shadow .2s}
     .auth-field:focus-within{border-color:#8B5CF6;box-shadow:0 0 0 4px rgba(139,92,246,.12)}
@@ -873,7 +877,9 @@
           <div id="couple-feed-list" class="space-y-3.5 pt-0.5"></div>
         </div>
         <div class="sticky bottom-3 z-30 flex justify-end pointer-events-none">
-          <button type="button" onclick="openCreatePostPage()" aria-label="Yeni paylaşım" class="pointer-events-auto w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-md border border-purple-200/90 text-royal-600 shadow-lg shadow-purple-900/15 flex items-center justify-center active:scale-90 transition"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+          <button type="button" onclick="openCreatePostPage()" aria-label="Yeni paylaşım" class="pointer-events-auto w-12 h-12 rounded-full bg-gradient-to-r from-royal-600 via-purple-600 to-romance-500 text-white shadow-xl shadow-royal-600/35 ring-4 ring-white/90 flex items-center justify-center active:scale-90 transition">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
         </div>
       </section>
 
@@ -1036,6 +1042,48 @@
         </div>
       </section>
     </main>
+
+    <!-- ==================== ÜZƏN MASKOT KÖMƏKÇİ (LUMI) ==================== -->
+    <div id="mascot-widget" class="pointer-events-none absolute bottom-[78px] right-3.5 z-30 flex flex-col items-end gap-2">
+      <!-- Maskotun başından çıxan danışıq balonu -->
+      <div id="mascot-bubble" onclick="runMascotAction()" class="hidden cursor-pointer pointer-events-auto relative max-w-[245px] rounded-2xl bg-white/95 backdrop-blur-xl border border-purple-200/90 shadow-lg shadow-purple-950/15 px-3 py-2 flex items-center gap-2 animate-pop-in">
+        <span id="mascot-mood-tag" class="text-[14px] shrink-0">🌸</span>
+        <p id="mascot-speech-text" class="text-[11.5px] font-bold text-ink leading-snug line-clamp-2 flex-1">Regl təqviminə bax 🌸</p>
+        <span class="text-[11px] font-extrabold text-royal-600 shrink-0">→</span>
+        <!-- Başından çıxan ox ucu -->
+        <span class="pointer-events-none absolute -bottom-1.5 right-5 w-3 h-3 rotate-45 bg-white border-r border-b border-purple-200/90"></span>
+      </div>
+
+      <!-- Maskot Avatar Düyməsi (basanda açır / bağlayır) -->
+      <button type="button" onclick="toggleMascotBubble()" aria-label="Lumi maskotu" class="pointer-events-auto relative shrink-0">
+        <span id="mascot-unread-badge" class="hidden -top-1 -left-1 absolute z-10 w-4 h-4 rounded-full bg-romance-500 text-white text-[9px] font-extrabold flex items-center justify-center shadow">!</span>
+        <div class="animate-mascot-bob relative w-[48px] h-[48px] rounded-full bg-gradient-to-br from-[#7C3AED] via-[#A855F7] to-[#F43F5E] p-[2.5px] shadow-lg shadow-purple-900/25 active:scale-90 transition">
+          <div class="w-full h-full rounded-full bg-white flex items-center justify-center relative overflow-hidden">
+            <svg class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+              <defs>
+                <linearGradient id="lumiBody" x1="12" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#8B5CF6"/>
+                  <stop offset="100%" stop-color="#F43F5E"/>
+                </linearGradient>
+              </defs>
+              <path d="M18 22C14 14 20 9 25 16" fill="url(#lumiBody)"/>
+              <path d="M46 22C50 14 44 9 39 16" fill="url(#lumiBody)"/>
+              <path d="M14 34C14 21 22 14 32 14C42 14 50 21 50 34C50 45 43 52 32 52C21 52 14 45 14 34Z" fill="url(#lumiBody)"/>
+              <ellipse cx="32" cy="35" rx="14" ry="11" fill="#FFF7FF"/>
+              <ellipse class="mascot-eye" cx="26.5" cy="34" rx="2.3" ry="2.8" fill="#1E1B4B"/>
+              <ellipse class="mascot-eye" cx="37.5" cy="34" rx="2.3" ry="2.8" fill="#1E1B4B"/>
+              <circle cx="25.8" cy="33" r="0.8" fill="#FFFFFF"/>
+              <circle cx="36.8" cy="33" r="0.8" fill="#FFFFFF"/>
+              <ellipse cx="22" cy="37.5" rx="2.4" ry="1.3" fill="#FDA4AF"/>
+              <ellipse cx="42" cy="37.5" rx="2.4" ry="1.3" fill="#FDA4AF"/>
+              <path d="M29 38.5Q32 41.5 35 38.5" stroke="#1E1B4B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M32 22.5C30.8 21 28.5 21.5 28.5 23.2C28.5 24.8 32 26.8 32 26.8C32 26.8 35.5 24.8 35.5 23.2C35.5 21.5 33.2 21 32 22.5Z" fill="#FDE047"/>
+            </svg>
+          </div>
+          <span class="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-white"></span>
+        </div>
+      </button>
+    </div>
 
     <!-- ALT NAVİQASİYA -->
     <nav id="bottom-nav" class="relative z-40 bg-white/95 backdrop-blur-xl border-t border-purple-100 px-2 pt-2 pb-3" aria-label="Naviqasiya">
@@ -1424,7 +1472,6 @@
     </div>
 
   </div>
-  <!-- ===== 1-ci HİSSƏNİN SONU — 2-ci hissəni düz buradan sonra yapışdır ===== -->
   <script>
     /* ================= ÜMUMİ ================= */
     const azMonths = ['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'];
@@ -1576,6 +1623,8 @@
       ALL_TABS.forEach((t) => document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tab));
       const threadOpen = !document.getElementById('messages-thread-view').classList.contains('hidden');
       document.getElementById('app-header').classList.toggle('hidden', (tab === 'messages' && threadOpen) || tab === 'create-post' || tab === 'couple-public');
+      const hideMascot = (tab === 'messages' && threadOpen) || tab === 'create-post' || tab === 'feed';
+      document.getElementById('mascot-widget')?.classList.toggle('hidden', hideMascot);
       document.querySelectorAll('.nav-btn').forEach((b) => {
         const a = b.dataset.tab === tab;
         b.classList.toggle('text-royal-600', a); b.classList.toggle('text-muted', !a);
@@ -1588,6 +1637,73 @@
       else if (tab === 'messages') backToMessagesList();
       else if (tab === 'astro') renderAstroPage();
       else if (tab === 'cycle') renderCyclePage();
+    }
+
+    /* ================= MASKOT KÖMƏKÇİ (LUMI) ================= */
+    const mascotState = { idx: 0, hideTimer: null, loopTimer: null };
+    function getMascotReminders() {
+      const cyc = computeCycleInfo();
+      const ast = computeCoupleAstroStats();
+      return [
+        { mood: '🌸', text: `Regl təqviminə bax (${cyc.left} gün qalıb)`, run: () => switchTab('cycle') },
+        { mood: '✨', text: `Bu gün bürc uyumuna bax (${ast.total}%)`, run: () => switchTab('astro') },
+        { mood: '🎲', text: 'Günün sualını cavabla, sirr açılsın', run: () => { switchTab('games'); openGameItem('daily_q', 'Günün Sualı'); } },
+        { mood: '🤗', text: 'Albertə indi kiçik bir qucaq göndər', run: () => { switchTab('home'); triggerEmotion('hug'); } },
+        { mood: '🎮', text: 'Birlikdə oyunlar oyna, xal topla', run: () => switchTab('games') },
+      ];
+    }
+    function hideMascotBubble() {
+      clearTimeout(mascotState.hideTimer);
+      document.getElementById('mascot-bubble')?.classList.add('hidden');
+      document.getElementById('mascot-unread-badge')?.classList.add('hidden');
+    }
+    function showSingleMascotWhisper(index, autoHideMs = 4800) {
+      const tips = getMascotReminders();
+      mascotState.idx = ((typeof index === 'number' ? index : mascotState.idx) + tips.length) % tips.length;
+      const cur = tips[mascotState.idx];
+      const bubble = document.getElementById('mascot-bubble');
+      const badge = document.getElementById('mascot-unread-badge');
+      if (!bubble) return;
+      setTxt('mascot-mood-tag', cur.mood);
+      setTxt('mascot-speech-text', cur.text);
+      bubble.classList.remove('hidden');
+      badge?.classList.remove('hidden');
+      clearTimeout(mascotState.hideTimer);
+      if (autoHideMs > 0) {
+        mascotState.hideTimer = setTimeout(() => hideMascotBubble(), autoHideMs);
+      }
+    }
+    function toggleMascotBubble() {
+      const bubble = document.getElementById('mascot-bubble');
+      if (!bubble) return;
+      if (!bubble.classList.contains('hidden')) {
+        hideMascotBubble();
+        return;
+      }
+      mascotState.idx++;
+      showSingleMascotWhisper(mascotState.idx, 6000);
+    }
+    function runMascotAction() {
+      const tips = getMascotReminders();
+      const cur = tips[mascotState.idx];
+      hideMascotBubble();
+      if (cur && typeof cur.run === 'function') cur.run();
+    }
+    function startMascotAutoReminders() {
+      setTimeout(() => {
+        if (document.getElementById('auth-screen')?.classList.contains('hidden')) {
+          showSingleMascotWhisper(0, 4800);
+        }
+      }, 2200);
+      clearInterval(mascotState.loopTimer);
+      mascotState.loopTimer = setInterval(() => {
+        const authClosed = document.getElementById('auth-screen')?.classList.contains('hidden');
+        const widgetVisible = !document.getElementById('mascot-widget')?.classList.contains('hidden');
+        if (authClosed && widgetVisible) {
+          mascotState.idx++;
+          showSingleMascotWhisper(mascotState.idx, 4800);
+        }
+      }, 15000);
     }
 
     /* ================= WELCOME & AUTH ================= */
@@ -2481,6 +2597,7 @@
       document.getElementById('messages-inbox-view').classList.add('hidden');
       document.getElementById('messages-thread-view').classList.remove('hidden');
       document.getElementById('app-header').classList.add('hidden');
+      document.getElementById('mascot-widget')?.classList.add('hidden');
       setTxt('active-chat-name', t.name);
       setTxt('active-chat-status', t.isPartner ? 'Onlayn • Bulvar yaxınlığında' : `${t.handle} • Cütlük`);
       document.getElementById('active-chat-avatar').src = t.avatar;
@@ -2830,6 +2947,7 @@
       renderActivities(); renderGamesCatalog(); renderOngoingAndInvites(); renderWeeklyChallenges();
       renderProfilePosts(); renderNotifications(); renderMemories(); renderCoupleFeed(); renderChatList();
       renderAstroPage(); syncCycleBanner(); startTimedCountdown(); startNextDateCountdown();
+      startMascotAutoReminders();
       switchTab('home');
       populateZodiacSelects(); setWelcomeSlide(0); switchAuthMode('welcome');
     });
